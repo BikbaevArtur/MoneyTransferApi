@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-email-data-table
+      author: artur-bikbaev
+      changes:
+        - createTable:
+            tableName: email_data
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(200)
+                  constraints:
+                    unique: true
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: email_data
+            baseColumnNames: user_id
+            constraintName: fk_email_data_user
+            referencedTableName: users
+            referencedColumnNames: id
+            onDelete: CASCADE

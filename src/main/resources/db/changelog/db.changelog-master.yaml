@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/users/db.users-changelog-1.0.yaml
+
+  - include:
+      file: db/changelog/account/db.account-changelog-1.0.yaml
+
+  - include:
+      file: db/changelog/email_data/db.email-data-changelog-1.0.yaml
+
+  - include:
+      file: db/changelog/phone_data/db.phone-data-changelog-1.0.yaml
+
