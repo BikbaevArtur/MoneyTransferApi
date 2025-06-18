@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: MoneyTransferApi
+  datasource:
+    url: jdbc:postgresql://localhost:5432/money_transfer
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    enabled: true
