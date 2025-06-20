@@ -5,11 +5,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import ru.bikbaev.moneytransferapi.dto.LoginUserDate;
 import ru.bikbaev.moneytransferapi.dto.request.LoginRequest;
 import ru.bikbaev.moneytransferapi.dto.response.AccessToken;
 import ru.bikbaev.moneytransferapi.entity.EmailData;
 import ru.bikbaev.moneytransferapi.entity.PhoneData;
-import ru.bikbaev.moneytransferapi.entity.User;
 import ru.bikbaev.moneytransferapi.mapper.UserMapper;
 import ru.bikbaev.moneytransferapi.security.JwtService;
 
@@ -37,25 +37,25 @@ public class AuthUserServiceImpl implements AuthUserService {
                 request.getLogin(), request.getPassword()
         ));
 
-        User user = findByEmailOrPhone(authentication.getName());
+        LoginUserDate loginUserDate = findByEmailOrPhone(authentication.getName());
 
-        UserDetails userDetails = userMapper.toUserDetails(user);
+        UserDetails userDetails = userMapper.toUserDetails(loginUserDate);
 
-        String token = jwtService.generateToken(userDetails, user.getId());
+        String token = jwtService.generateToken(userDetails, loginUserDate.getUser().getId());
 
         return new AccessToken(token);
     }
 
 
     @Override
-    public User findByEmailOrPhone(String login) {
+    public LoginUserDate findByEmailOrPhone(String login) {
 
         if (login.contains("@")) {
             EmailData emailData = emailService.findByEmail(login);
-            return emailData.getUser();
+            return new LoginUserDate(login, emailData.getUser());
         } else {
             PhoneData phoneData = phoneService.findByPhone(login);
-            return phoneData.getUser();
+            return new LoginUserDate(login, phoneData.getUser());
         }
     }
 }

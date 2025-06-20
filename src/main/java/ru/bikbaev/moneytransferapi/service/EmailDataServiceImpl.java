@@ -45,7 +45,7 @@ public class EmailDataServiceImpl implements EmailDataService {
 
         Long userId = jwtService.extractUserId(token);
 
-        User user = userService.findEntityById(userId);
+        User user = userService.findEntityUserById(userId);
 
         emailDataValidator.validationEmailUniq(email);
 

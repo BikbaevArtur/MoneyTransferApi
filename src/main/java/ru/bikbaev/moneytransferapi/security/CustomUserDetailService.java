@@ -1,10 +1,11 @@
 package ru.bikbaev.moneytransferapi.security;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.bikbaev.moneytransferapi.entity.User;
+import ru.bikbaev.moneytransferapi.dto.LoginUserDate;
 import ru.bikbaev.moneytransferapi.mapper.UserMapper;
 import ru.bikbaev.moneytransferapi.service.AuthUserService;
 
@@ -21,8 +22,8 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = authUserService.findByEmailOrPhone(username);
-        return userMapper.toUserDetails(user);
+        LoginUserDate loginUserDate = authUserService.findByEmailOrPhone(username);
+        return userMapper.toUserDetails(loginUserDate);
     }
 
 

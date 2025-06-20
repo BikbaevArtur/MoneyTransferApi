@@ -42,7 +42,7 @@ public class PhoneDataServiceImpl implements PhoneDataService {
     public UserPhoneResponse addPhoneNumber(String token, PhoneNumber phoneNumber) {
         Long userId = jwtService.extractUserId(token);
 
-        User user = userService.findEntityById(userId);
+        User user = userService.findEntityUserById(userId);
 
         phoneDataValidator.validationPhoneUniq(phoneNumber);
 
@@ -86,7 +86,7 @@ public class PhoneDataServiceImpl implements PhoneDataService {
 
 
     private PhoneData findEntityById(Long id){
-        return repository.findById(id).orElseThrow(
+        return repository.findByIdEntity(id).orElseThrow(
                 ()-> new PhoneNotFoundException("Phone not found")
         );
     }
