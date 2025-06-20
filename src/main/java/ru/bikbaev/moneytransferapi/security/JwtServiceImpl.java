@@ -16,6 +16,7 @@ import java.util.Map;
 @Service
 public class JwtServiceImpl implements JwtService {
 
+
     @Value("${spring.security.jwt.secret-key-access}")
     private String secretKey;
 
@@ -24,11 +25,13 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
 
+
     public String generateToken(UserDetails userDetails, Long userId) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId);
         return buildToken(claims, userDetails, expiration);
     }
+
 
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
@@ -36,8 +39,9 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String extractUserId(String token) {
-        return extractAllClaims(token).get("userId").toString();
+    public Long extractUserId(String token) {
+        String userId = extractAllClaims(token).get("userId").toString();
+        return Long.parseLong(userId);
     }
 
     @Override
@@ -45,6 +49,7 @@ public class JwtServiceImpl implements JwtService {
         return extractAllClaims(token).getSubject();
     }
 
+    //toDo может убрать валидацию по id
     private boolean isUsernameValid(String token, UserDetails userDetails) {
         String username = extractAllClaims(token).getSubject();
         return username.equals(userDetails.getUsername());
