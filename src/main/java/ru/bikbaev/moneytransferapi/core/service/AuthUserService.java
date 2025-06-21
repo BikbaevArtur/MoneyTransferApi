@@ -1,4 +1,4 @@
-package ru.bikbaev.moneytransferapi.service;
+package ru.bikbaev.moneytransferapi.core.service;
 
 import ru.bikbaev.moneytransferapi.dto.LoginUserDate;
 import ru.bikbaev.moneytransferapi.dto.request.LoginRequest;

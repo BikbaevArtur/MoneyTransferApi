@@ -1,4 +1,4 @@
-package ru.bikbaev.moneytransferapi.exception;
+package ru.bikbaev.moneytransferapi.core.exception;
 
 public class MinimumPhoneRequiredException extends RuntimeException{
     public MinimumPhoneRequiredException(String message) {

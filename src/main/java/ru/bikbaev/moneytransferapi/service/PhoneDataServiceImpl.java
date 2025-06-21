@@ -1,16 +1,18 @@
 package ru.bikbaev.moneytransferapi.service;
 
 import org.springframework.stereotype.Service;
+import ru.bikbaev.moneytransferapi.core.service.PhoneDataService;
+import ru.bikbaev.moneytransferapi.core.service.UserService;
 import ru.bikbaev.moneytransferapi.dto.request.PhoneNumber;
 import ru.bikbaev.moneytransferapi.dto.response.UserPhoneResponse;
-import ru.bikbaev.moneytransferapi.entity.PhoneData;
-import ru.bikbaev.moneytransferapi.entity.User;
-import ru.bikbaev.moneytransferapi.exception.PhoneNotFoundException;
+import ru.bikbaev.moneytransferapi.core.entity.PhoneData;
+import ru.bikbaev.moneytransferapi.core.entity.User;
+import ru.bikbaev.moneytransferapi.core.exception.PhoneNotFoundException;
 import ru.bikbaev.moneytransferapi.mapper.PhoneDataMapper;
 import ru.bikbaev.moneytransferapi.repository.PhoneDataRepository;
 import ru.bikbaev.moneytransferapi.security.JwtService;
-import ru.bikbaev.moneytransferapi.validation.AccessValidator;
-import ru.bikbaev.moneytransferapi.validation.PhoneDataValidator;
+import ru.bikbaev.moneytransferapi.core.validation.AccessValidator;
+import ru.bikbaev.moneytransferapi.core.validation.PhoneDataValidator;
 
 @Service
 public class PhoneDataServiceImpl implements PhoneDataService {

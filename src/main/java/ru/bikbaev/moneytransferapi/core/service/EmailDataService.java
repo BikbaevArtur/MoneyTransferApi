@@ -1,8 +1,8 @@
-package ru.bikbaev.moneytransferapi.service;
+package ru.bikbaev.moneytransferapi.core.service;
 
 import ru.bikbaev.moneytransferapi.dto.request.Email;
 import ru.bikbaev.moneytransferapi.dto.response.UserEmailResponse;
-import ru.bikbaev.moneytransferapi.entity.EmailData;
+import ru.bikbaev.moneytransferapi.core.entity.EmailData;
 
 public interface EmailDataService {
 

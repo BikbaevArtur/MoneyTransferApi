@@ -2,10 +2,10 @@ package ru.bikbaev.moneytransferapi.mapper;
 
 import org.springframework.stereotype.Component;
 import ru.bikbaev.moneytransferapi.dto.response.UserPhoneResponse;
-import ru.bikbaev.moneytransferapi.entity.PhoneData;
+import ru.bikbaev.moneytransferapi.core.entity.PhoneData;
 
 @Component
-public class PhoneDataMapperImpl implements PhoneDataMapper{
+public class PhoneDataMapperImpl implements PhoneDataMapper {
 
     @Override
     public UserPhoneResponse toDto(PhoneData phoneData) {

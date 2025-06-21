@@ -5,11 +5,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import ru.bikbaev.moneytransferapi.core.service.AuthUserService;
+import ru.bikbaev.moneytransferapi.core.service.EmailDataService;
+import ru.bikbaev.moneytransferapi.core.service.PhoneDataService;
 import ru.bikbaev.moneytransferapi.dto.LoginUserDate;
 import ru.bikbaev.moneytransferapi.dto.request.LoginRequest;
 import ru.bikbaev.moneytransferapi.dto.response.AccessToken;
-import ru.bikbaev.moneytransferapi.entity.EmailData;
-import ru.bikbaev.moneytransferapi.entity.PhoneData;
+import ru.bikbaev.moneytransferapi.core.entity.EmailData;
+import ru.bikbaev.moneytransferapi.core.entity.PhoneData;
 import ru.bikbaev.moneytransferapi.mapper.UserMapper;
 import ru.bikbaev.moneytransferapi.security.JwtService;
 

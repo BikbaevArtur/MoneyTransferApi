@@ -1,9 +1,10 @@
 package ru.bikbaev.moneytransferapi.validation;
 
 import org.springframework.stereotype.Component;
-import ru.bikbaev.moneytransferapi.entity.EmailData;
-import ru.bikbaev.moneytransferapi.entity.PhoneData;
-import ru.bikbaev.moneytransferapi.exception.AccessDeniedException;
+import ru.bikbaev.moneytransferapi.core.validation.AccessValidator;
+import ru.bikbaev.moneytransferapi.core.entity.EmailData;
+import ru.bikbaev.moneytransferapi.core.entity.PhoneData;
+import ru.bikbaev.moneytransferapi.core.exception.AccessDeniedException;
 
 @Component
 public class AccessValidatorImpl implements AccessValidator {

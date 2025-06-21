@@ -7,7 +7,7 @@ import ru.bikbaev.moneytransferapi.dto.LoginUserDate;
 import ru.bikbaev.moneytransferapi.dto.request.Email;
 import ru.bikbaev.moneytransferapi.dto.request.PhoneNumber;
 import ru.bikbaev.moneytransferapi.dto.response.UserResponseDto;
-import ru.bikbaev.moneytransferapi.entity.User;
+import ru.bikbaev.moneytransferapi.core.entity.User;
 
 import java.util.List;
 import java.util.stream.Collectors;

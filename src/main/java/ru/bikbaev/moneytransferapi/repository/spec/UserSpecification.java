@@ -2,9 +2,9 @@ package ru.bikbaev.moneytransferapi.repository.spec;
 
 import org.springframework.data.jpa.domain.Specification;
 import ru.bikbaev.moneytransferapi.dto.request.UserParamsSearch;
-import ru.bikbaev.moneytransferapi.entity.EmailData;
-import ru.bikbaev.moneytransferapi.entity.PhoneData;
-import ru.bikbaev.moneytransferapi.entity.User;
+import ru.bikbaev.moneytransferapi.core.entity.EmailData;
+import ru.bikbaev.moneytransferapi.core.entity.PhoneData;
+import ru.bikbaev.moneytransferapi.core.entity.User;
 
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;

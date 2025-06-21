@@ -2,7 +2,7 @@ package ru.bikbaev.moneytransferapi.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import ru.bikbaev.moneytransferapi.entity.User;
+import ru.bikbaev.moneytransferapi.core.entity.User;
 
 @Data
 @AllArgsConstructor

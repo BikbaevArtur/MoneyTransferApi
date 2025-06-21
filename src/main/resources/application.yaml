@@ -9,6 +9,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+    show-sql: true
+
+
+
+
   liquibase:
     enabled: true
 
@@ -16,3 +21,9 @@ spring:
     jwt:
       secret-key-access: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
       expiration-time-access: 3600000
+
+
+logging:
+  level:
+    org.springframework.transaction.interceptor: trace
+    com.zaxxer.hikari.pool.HikariPool: debug

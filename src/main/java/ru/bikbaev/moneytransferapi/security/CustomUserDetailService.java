@@ -1,13 +1,12 @@
 package ru.bikbaev.moneytransferapi.security;
 
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.bikbaev.moneytransferapi.dto.LoginUserDate;
 import ru.bikbaev.moneytransferapi.mapper.UserMapper;
-import ru.bikbaev.moneytransferapi.service.AuthUserService;
+import ru.bikbaev.moneytransferapi.core.service.AuthUserService;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {

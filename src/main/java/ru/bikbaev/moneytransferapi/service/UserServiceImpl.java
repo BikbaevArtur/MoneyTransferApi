@@ -4,16 +4,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.bikbaev.moneytransferapi.core.service.UserService;
 import ru.bikbaev.moneytransferapi.dto.request.UserParamsSearch;
 import ru.bikbaev.moneytransferapi.dto.response.UserResponseDto;
-import ru.bikbaev.moneytransferapi.entity.User;
-import ru.bikbaev.moneytransferapi.exception.UserNotFoundException;
+import ru.bikbaev.moneytransferapi.core.entity.User;
+import ru.bikbaev.moneytransferapi.core.exception.UserNotFoundException;
 import ru.bikbaev.moneytransferapi.mapper.UserMapper;
 import ru.bikbaev.moneytransferapi.repository.UserRepository;
 import ru.bikbaev.moneytransferapi.repository.spec.UserSpecification;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final UserMapper mapper;
 

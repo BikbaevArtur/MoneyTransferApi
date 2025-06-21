@@ -1,7 +1,7 @@
-package ru.bikbaev.moneytransferapi.validation;
+package ru.bikbaev.moneytransferapi.core.validation;
 
-import ru.bikbaev.moneytransferapi.entity.EmailData;
-import ru.bikbaev.moneytransferapi.entity.PhoneData;
+import ru.bikbaev.moneytransferapi.core.entity.EmailData;
+import ru.bikbaev.moneytransferapi.core.entity.PhoneData;
 
 public interface AccessValidator {
     void validateOwnership(Long resourceOwnerId, Long currentUserId);

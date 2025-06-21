@@ -3,7 +3,7 @@ package ru.bikbaev.moneytransferapi.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import ru.bikbaev.moneytransferapi.entity.EmailData;
+import ru.bikbaev.moneytransferapi.core.entity.EmailData;
 
 import java.util.Optional;
 

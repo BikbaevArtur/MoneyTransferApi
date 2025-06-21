@@ -11,3 +11,6 @@ databaseChangeLog:
   - include:
       file: db/changelog/phone_data/db.phone-data-changelog-1.0.yaml
 
+  - include:
+      file: db/changelog/test-user/insert_test_users.yaml
+

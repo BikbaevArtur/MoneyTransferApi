@@ -2,10 +2,10 @@ package ru.bikbaev.moneytransferapi.mapper;
 
 import org.springframework.stereotype.Component;
 import ru.bikbaev.moneytransferapi.dto.response.UserEmailResponse;
-import ru.bikbaev.moneytransferapi.entity.EmailData;
+import ru.bikbaev.moneytransferapi.core.entity.EmailData;
 
 @Component
-public class EmailDataMapperImpl implements EmailDataMapper{
+public class EmailDataMapperImpl implements EmailDataMapper {
 
     @Override
     public UserEmailResponse toDto(EmailData emailData) {

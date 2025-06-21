@@ -1,4 +1,4 @@
-package ru.bikbaev.moneytransferapi.entity;
+package ru.bikbaev.moneytransferapi.core.entity;
 
 import lombok.*;
 
