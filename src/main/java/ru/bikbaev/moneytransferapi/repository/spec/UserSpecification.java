@@ -1,10 +1,12 @@
 package ru.bikbaev.moneytransferapi.repository.spec;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
-import ru.bikbaev.moneytransferapi.dto.request.UserParamsSearch;
 import ru.bikbaev.moneytransferapi.core.entity.EmailData;
 import ru.bikbaev.moneytransferapi.core.entity.PhoneData;
 import ru.bikbaev.moneytransferapi.core.entity.User;
+import ru.bikbaev.moneytransferapi.dto.request.UserParamsSearch;
 
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
@@ -12,33 +14,35 @@ import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserSpecification {
 
     public static Specification<User> filter(UserParamsSearch params) {
-        return (root, query, criteriaBuilder) -> {
+        return (root, query, cb) -> {
+
             List<Predicate> predicates = new ArrayList<>();
 
             if (params.getDateOfBirthAfter() != null) {
-                predicates.add(criteriaBuilder.greaterThan(root.get("dateOfBirth"), params.getDateOfBirthAfter()));
+                predicates.add(cb.greaterThan(root.get("dateOfBirth"), params.getDateOfBirthAfter()));
             }
 
             if (params.getNamePrefix() != null) {
-                predicates.add(criteriaBuilder.like(root.get("name"), params.getNamePrefix() + "%"));
+                predicates.add(cb.like(root.get("name"), params.getNamePrefix() + "%"));
             }
 
             if (params.getEmail() != null) {
                 Join<User, EmailData> emailJoin = root.join("emails", JoinType.INNER);
-                predicates.add(criteriaBuilder.equal(emailJoin.get("email"), params.getEmail()));
+                predicates.add(cb.equal(emailJoin.get("email"), params.getEmail()));
                 query.distinct(true);
             }
 
             if (params.getPhone() != null) {
                 Join<User, PhoneData> phoneJoin = root.join("phones", JoinType.INNER);
-                predicates.add(criteriaBuilder.equal(phoneJoin.get("phone"), params.getPhone()));
+                predicates.add(cb.equal(phoneJoin.get("phone"), params.getPhone()));
                 query.distinct(true);
             }
 
-            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+            return cb.and(predicates.toArray(new Predicate[0]));
         };
     }
 }

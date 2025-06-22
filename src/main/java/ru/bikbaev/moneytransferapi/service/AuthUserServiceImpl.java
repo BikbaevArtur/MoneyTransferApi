@@ -10,7 +10,7 @@ import ru.bikbaev.moneytransferapi.core.service.EmailDataService;
 import ru.bikbaev.moneytransferapi.core.service.PhoneDataService;
 import ru.bikbaev.moneytransferapi.dto.LoginUserDate;
 import ru.bikbaev.moneytransferapi.dto.request.LoginRequest;
-import ru.bikbaev.moneytransferapi.dto.response.AccessToken;
+import ru.bikbaev.moneytransferapi.dto.response.AccessTokenResponse;
 import ru.bikbaev.moneytransferapi.core.entity.EmailData;
 import ru.bikbaev.moneytransferapi.core.entity.PhoneData;
 import ru.bikbaev.moneytransferapi.mapper.UserMapper;
@@ -35,7 +35,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     }
 
     @Override
-    public AccessToken authenticate(LoginRequest request) {
+    public AccessTokenResponse authenticate(LoginRequest request) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 request.getLogin(), request.getPassword()
         ));
@@ -46,7 +46,7 @@ public class AuthUserServiceImpl implements AuthUserService {
 
         String token = jwtService.generateToken(userDetails, loginUserDate.getUser().getId());
 
-        return new AccessToken(token);
+        return new AccessTokenResponse(token);
     }
 
 

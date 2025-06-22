@@ -15,11 +15,11 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
 
     @NonNull
-    @EntityGraph(attributePaths = {"phones", "emails"})
+    @EntityGraph(attributePaths = {"phones", "emails", "account"})
     Page<User> findAll(Specification<User> spec, @NonNull Pageable pageable);
 
     @NonNull
-    @EntityGraph(attributePaths ={"account"})
+    @EntityGraph(attributePaths = {"account"})
     Optional<User> findById(@NonNull Long id);
 
 }

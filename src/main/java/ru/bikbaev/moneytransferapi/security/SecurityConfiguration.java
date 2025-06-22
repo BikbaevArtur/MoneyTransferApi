@@ -45,7 +45,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(
                         auth -> auth
-                                .antMatchers("/auth/**").permitAll()
+                                .antMatchers("/api/v1/auth/login").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement

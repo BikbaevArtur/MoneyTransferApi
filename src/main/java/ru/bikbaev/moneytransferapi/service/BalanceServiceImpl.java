@@ -6,13 +6,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bikbaev.moneytransferapi.core.entity.Account;
+import ru.bikbaev.moneytransferapi.core.exception.AccountNotFoundException;
 import ru.bikbaev.moneytransferapi.core.service.BalanceService;
 import ru.bikbaev.moneytransferapi.core.validation.BalanceValidator;
-import ru.bikbaev.moneytransferapi.core.exception.AccountNotFoundException;
+import ru.bikbaev.moneytransferapi.dto.request.TransferMoneyRequest;
+import ru.bikbaev.moneytransferapi.dto.response.TransferMoneyResponse;
 import ru.bikbaev.moneytransferapi.repository.AccountRepository;
 import ru.bikbaev.moneytransferapi.security.JwtService;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,9 +71,12 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
-    public void transferMoney(String token, Long toUserId, BigDecimal amount) {
+    public TransferMoneyResponse transferMoney(String token, TransferMoneyRequest request) {
 
         Long fromUserId = jwtService.extractUserId(token);
+
+        Long toUserId = request.getToUserId();
+        BigDecimal amount = request.getAmount();
 
         validator.validateTransferToSelf(fromUserId, toUserId);
         validator.validateAmountTransfer(amount);
@@ -89,7 +96,13 @@ public class BalanceServiceImpl implements BalanceService {
         accountToTransfer.setBalance(toTransferBalance);
 
         repository.saveAll(List.of(accountToTransfer, accountFromTransfer));
-
+        return TransferMoneyResponse.builder()
+                .fromUserName(accountFromTransfer.getUser().getName())
+                .toUserName(accountToTransfer.getUser().getName())
+                .amountTransfer(amount)
+                .currentBalance(accountFromTransfer.getBalance())
+                .dateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .build();
     }
 
     private Account findByIdUser(Long id) {
