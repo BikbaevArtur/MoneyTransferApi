@@ -27,7 +27,7 @@ public class BalanceServiceImpl implements BalanceService {
     private final BalanceValidator validator;
 
 
-    private final BigDecimal MAX_BALANCE_INCREASE_PERCENT = BigDecimal.valueOf(3.07);
+    private final BigDecimal MAX_BALANCE_INCREASE_PERCENT = BigDecimal.valueOf(2.07);
     private final BigDecimal INTEREST_RATE = BigDecimal.valueOf(1.1);
     private final int PAGE_SIZE = 10;
 
