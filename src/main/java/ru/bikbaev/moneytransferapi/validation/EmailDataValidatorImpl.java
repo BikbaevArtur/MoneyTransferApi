@@ -2,7 +2,7 @@ package ru.bikbaev.moneytransferapi.validation;
 
 import org.springframework.stereotype.Component;
 import ru.bikbaev.moneytransferapi.core.validation.EmailDataValidator;
-import ru.bikbaev.moneytransferapi.dto.request.Email;
+import ru.bikbaev.moneytransferapi.dto.Email;
 import ru.bikbaev.moneytransferapi.core.exception.EmailAlreadyExistException;
 import ru.bikbaev.moneytransferapi.core.exception.MinimumEmailRequiredException;
 import ru.bikbaev.moneytransferapi.repository.EmailDataRepository;

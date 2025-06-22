@@ -40,7 +40,7 @@ public class TestData {
         for (int i = 0; i < COUNT_TEST_USER; i++) {
 
             User user = User.builder()
-                    .name(nameUser)
+                    .name(nameUser +" "+i)
                     .dateOfBirth(getRandomDate())
                     .password(encoder.encode(password))
                     .build();
@@ -59,12 +59,11 @@ public class TestData {
                     .build();
             phoneDataList.add(phoneData);
 
-            StringBuilder emailBuild = new StringBuilder(email);
-            emailBuild.append(i);
-            emailBuild.append("@mail.ru");
+            String emailBuild = email + i +
+                    "@mail.ru";
             EmailData emailData = EmailData.builder()
                     .user(user)
-                    .email(emailBuild.toString())
+                    .email(emailBuild)
                     .build();
             emailDataList.add(emailData);
 

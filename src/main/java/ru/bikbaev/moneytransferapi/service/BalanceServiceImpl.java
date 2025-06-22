@@ -11,6 +11,7 @@ import ru.bikbaev.moneytransferapi.core.service.BalanceService;
 import ru.bikbaev.moneytransferapi.core.validation.BalanceValidator;
 import ru.bikbaev.moneytransferapi.dto.request.TransferMoneyRequest;
 import ru.bikbaev.moneytransferapi.dto.response.TransferMoneyResponse;
+import ru.bikbaev.moneytransferapi.dto.response.UserBalanceResponse;
 import ru.bikbaev.moneytransferapi.repository.AccountRepository;
 import ru.bikbaev.moneytransferapi.security.JwtService;
 
@@ -103,6 +104,15 @@ public class BalanceServiceImpl implements BalanceService {
                 .currentBalance(accountFromTransfer.getBalance())
                 .dateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .build();
+    }
+
+    @Override
+    public UserBalanceResponse getUserBalance(String token) {
+        Long userId = jwtService.extractUserId(token);
+        Account userAccount = repository.findByIdUserFetch(userId).orElseThrow(
+                ()-> new AccountNotFoundException("Account not found")
+        );
+        return new UserBalanceResponse(userAccount.getUser().getName(),userAccount.getBalance());
     }
 
     private Account findByIdUser(Long id) {

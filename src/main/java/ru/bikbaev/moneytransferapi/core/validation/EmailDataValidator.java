@@ -1,6 +1,6 @@
 package ru.bikbaev.moneytransferapi.core.validation;
 
-import ru.bikbaev.moneytransferapi.dto.request.Email;
+import ru.bikbaev.moneytransferapi.dto.Email;
 
 public interface EmailDataValidator {
 

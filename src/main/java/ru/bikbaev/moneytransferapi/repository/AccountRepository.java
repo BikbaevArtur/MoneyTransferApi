@@ -11,7 +11,7 @@ import ru.bikbaev.moneytransferapi.core.entity.Account;
 import javax.persistence.LockModeType;
 import java.util.Optional;
 
-public interface AccountRepository extends JpaRepository<Account,Long> {
+public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select a from Account a")
@@ -20,5 +20,9 @@ public interface AccountRepository extends JpaRepository<Account,Long> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select a from Account a join fetch a.user where a.user.id = :id")
     Optional<Account> findByIdUserWithLock(@Param("id") Long id);
+
+
+    @Query("select a from Account a join fetch a.user where a.user.id = :idUser")
+    Optional<Account> findByIdUserFetch(@Param("idUser") Long idUser);
 
 }

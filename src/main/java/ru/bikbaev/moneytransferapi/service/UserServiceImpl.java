@@ -12,15 +12,29 @@ import ru.bikbaev.moneytransferapi.dto.response.UserResponseDto;
 import ru.bikbaev.moneytransferapi.mapper.UserMapper;
 import ru.bikbaev.moneytransferapi.repository.UserRepository;
 import ru.bikbaev.moneytransferapi.repository.spec.UserSpecification;
+import ru.bikbaev.moneytransferapi.security.JwtService;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final UserMapper mapper;
+    private final JwtService jwtService;
 
-    public UserServiceImpl(UserRepository repository, UserMapper mapper) {
+    public UserServiceImpl(UserRepository repository, UserMapper mapper, JwtService jwtService) {
         this.repository = repository;
         this.mapper = mapper;
+        this.jwtService = jwtService;
+    }
+
+    @Override
+    public UserResponseDto findById(Long id) {
+        return mapper.toDto(findEntityUserById(id));
+    }
+
+    @Override
+    public UserResponseDto getUserProfile(String token) {
+        Long userId = jwtService.extractUserId(token);
+        return findById(userId);
     }
 
     @Override

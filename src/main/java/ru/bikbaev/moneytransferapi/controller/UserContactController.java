@@ -5,13 +5,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.bikbaev.moneytransferapi.core.service.EmailDataService;
 import ru.bikbaev.moneytransferapi.core.service.PhoneDataService;
-import ru.bikbaev.moneytransferapi.dto.request.Email;
-import ru.bikbaev.moneytransferapi.dto.request.PhoneNumber;
+import ru.bikbaev.moneytransferapi.dto.Email;
+import ru.bikbaev.moneytransferapi.dto.PhoneNumber;
+import ru.bikbaev.moneytransferapi.dto.response.EmailResponse;
+import ru.bikbaev.moneytransferapi.dto.response.PhoneNumberResponse;
 import ru.bikbaev.moneytransferapi.dto.response.UserEmailResponse;
 import ru.bikbaev.moneytransferapi.dto.response.UserPhoneResponse;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/v1/user/contacts")
+@RequestMapping("/api/v1/users/contacts")
 public class UserContactController {
     private final EmailDataService emailService;
     private final PhoneDataService phoneService;
@@ -26,6 +30,17 @@ public class UserContactController {
                                                       @RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.substring(7);
         return ResponseEntity.status(HttpStatus.CREATED).body(emailService.addEmail(token, email));
+    }
+
+    @GetMapping("/email/user/{id}")
+    public ResponseEntity<List<Email>> findByUserId(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(emailService.findAllEmailByIdUser(id));
+    }
+
+    @GetMapping("/email/me")
+    public ResponseEntity<List<EmailResponse>> getUserEmail(@RequestHeader("Authorization") String authorizationHeader){
+        String token = authorizationHeader.substring(7);
+        return ResponseEntity.status(HttpStatus.OK).body(emailService.getEmailUser(token));
     }
 
 
@@ -47,6 +62,10 @@ public class UserContactController {
     }
 
 
+
+
+
+
     @PostMapping("/phone")
     public ResponseEntity<UserPhoneResponse> addPhone(@RequestBody PhoneNumber phoneNumber,
                                                       @RequestHeader("Authorization") String authorizationHeader) {
@@ -54,6 +73,16 @@ public class UserContactController {
         return ResponseEntity.status(HttpStatus.CREATED).body(phoneService.addPhoneNumber(token,phoneNumber));
     }
 
+    @GetMapping("/phone/user/{id}")
+    public ResponseEntity<List<PhoneNumber>> findByIdUser(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(phoneService.findAllPhoneNumberByIdUser(id));
+    }
+
+    @GetMapping("/phone/me")
+    public ResponseEntity<List<PhoneNumberResponse>> getUserPhoneNumber(  @RequestHeader("Authorization") String authorizationHeader){
+        String token = authorizationHeader.substring(7);
+        return ResponseEntity.status(HttpStatus.OK).body(phoneService.getPhoneNumberUser(token));
+    }
 
     @PutMapping("/phone/{id}")
     public ResponseEntity<UserPhoneResponse> updatePhone(@PathVariable Long id,

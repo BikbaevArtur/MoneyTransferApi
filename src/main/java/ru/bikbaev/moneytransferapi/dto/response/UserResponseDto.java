@@ -3,8 +3,8 @@ package ru.bikbaev.moneytransferapi.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import ru.bikbaev.moneytransferapi.dto.request.Email;
-import ru.bikbaev.moneytransferapi.dto.request.PhoneNumber;
+import ru.bikbaev.moneytransferapi.dto.Email;
+import ru.bikbaev.moneytransferapi.dto.PhoneNumber;
 
 import java.time.LocalDate;
 import java.util.List;

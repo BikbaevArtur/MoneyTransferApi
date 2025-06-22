@@ -1,6 +1,6 @@
 package ru.bikbaev.moneytransferapi.core.validation;
 
-import ru.bikbaev.moneytransferapi.dto.request.PhoneNumber;
+import ru.bikbaev.moneytransferapi.dto.PhoneNumber;
 
 public interface PhoneDataValidator {
 

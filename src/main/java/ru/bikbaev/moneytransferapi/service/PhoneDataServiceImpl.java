@@ -3,7 +3,8 @@ package ru.bikbaev.moneytransferapi.service;
 import org.springframework.stereotype.Service;
 import ru.bikbaev.moneytransferapi.core.service.PhoneDataService;
 import ru.bikbaev.moneytransferapi.core.service.UserService;
-import ru.bikbaev.moneytransferapi.dto.request.PhoneNumber;
+import ru.bikbaev.moneytransferapi.dto.PhoneNumber;
+import ru.bikbaev.moneytransferapi.dto.response.PhoneNumberResponse;
 import ru.bikbaev.moneytransferapi.dto.response.UserPhoneResponse;
 import ru.bikbaev.moneytransferapi.core.entity.PhoneData;
 import ru.bikbaev.moneytransferapi.core.entity.User;
@@ -13,6 +14,8 @@ import ru.bikbaev.moneytransferapi.repository.PhoneDataRepository;
 import ru.bikbaev.moneytransferapi.security.JwtService;
 import ru.bikbaev.moneytransferapi.core.validation.AccessValidator;
 import ru.bikbaev.moneytransferapi.core.validation.PhoneDataValidator;
+
+import java.util.List;
 
 @Service
 public class PhoneDataServiceImpl implements PhoneDataService {
@@ -38,6 +41,17 @@ public class PhoneDataServiceImpl implements PhoneDataService {
         return repository.findByPhone(phone).orElseThrow(
                 ()-> new PhoneNotFoundException("Phone "+ phone + " not found")
         );
+    }
+
+    @Override
+    public List<PhoneNumber> findAllPhoneNumberByIdUser(Long idUser) {
+        return mapper.allToPhoneNumber(repository.findByUserId(idUser));
+    }
+
+    @Override
+    public List<PhoneNumberResponse> getPhoneNumberUser(String token) {
+        Long userId = jwtService.extractUserId(token);
+        return mapper.allToPhoneNumberResponse(repository.findByUserId(userId));
     }
 
     @Override

@@ -1,8 +1,13 @@
 package ru.bikbaev.moneytransferapi.mapper;
 
 import org.springframework.stereotype.Component;
+import ru.bikbaev.moneytransferapi.dto.Email;
+import ru.bikbaev.moneytransferapi.dto.response.EmailResponse;
 import ru.bikbaev.moneytransferapi.dto.response.UserEmailResponse;
 import ru.bikbaev.moneytransferapi.core.entity.EmailData;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class EmailDataMapperImpl implements EmailDataMapper {
@@ -15,5 +20,15 @@ public class EmailDataMapperImpl implements EmailDataMapper {
                 .emailId(emailData.getId())
                 .email(emailData.getEmail())
                 .build();
+    }
+
+    @Override
+    public List<Email> allToEmail(List<EmailData> emailData) {
+        return emailData.stream().map(e->new Email(e.getEmail())).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EmailResponse> allToEmailResponse(List<EmailData> emailData) {
+        return emailData.stream().map(e->new EmailResponse(e.getId(),e.getEmail())).collect(Collectors.toList());
     }
 }

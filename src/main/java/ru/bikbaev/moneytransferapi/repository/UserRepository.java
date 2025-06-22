@@ -19,7 +19,7 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     Page<User> findAll(Specification<User> spec, @NonNull Pageable pageable);
 
     @NonNull
-    @EntityGraph(attributePaths = {"account"})
+    @EntityGraph(attributePaths = {"account","emails","phones"})
     Optional<User> findById(@NonNull Long id);
 
 }

@@ -2,11 +2,9 @@ package ru.bikbaev.moneytransferapi.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.bikbaev.moneytransferapi.core.service.UserService;
 import ru.bikbaev.moneytransferapi.dto.request.UserParamsSearch;
 import ru.bikbaev.moneytransferapi.dto.response.UserResponseDto;
@@ -43,6 +41,18 @@ public class UserController {
 
         Page<UserResponseDto> result = service.searchUsers(params, pageable);
         return ResponseEntity.ok(result);
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDto> findById(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDto> meProfile( @RequestHeader("Authorization") String authorizationHeader){
+        String token = authorizationHeader.substring(7);
+        return ResponseEntity.status(HttpStatus.OK).body(service.getUserProfile(token));
     }
 
 

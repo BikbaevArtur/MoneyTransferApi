@@ -2,7 +2,7 @@ package ru.bikbaev.moneytransferapi.validation;
 
 import org.springframework.stereotype.Component;
 import ru.bikbaev.moneytransferapi.core.validation.PhoneDataValidator;
-import ru.bikbaev.moneytransferapi.dto.request.PhoneNumber;
+import ru.bikbaev.moneytransferapi.dto.PhoneNumber;
 import ru.bikbaev.moneytransferapi.core.exception.MinimumPhoneRequiredException;
 import ru.bikbaev.moneytransferapi.core.exception.PhoneAlreadyExistException;
 import ru.bikbaev.moneytransferapi.repository.PhoneDataRepository;

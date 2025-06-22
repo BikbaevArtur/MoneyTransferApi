@@ -1,4 +1,4 @@
-package ru.bikbaev.moneytransferapi.dto.request;
+package ru.bikbaev.moneytransferapi.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

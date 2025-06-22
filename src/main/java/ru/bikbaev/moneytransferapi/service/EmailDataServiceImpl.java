@@ -1,18 +1,21 @@
 package ru.bikbaev.moneytransferapi.service;
 
 import org.springframework.stereotype.Service;
-import ru.bikbaev.moneytransferapi.core.service.EmailDataService;
-import ru.bikbaev.moneytransferapi.core.service.UserService;
-import ru.bikbaev.moneytransferapi.dto.request.Email;
-import ru.bikbaev.moneytransferapi.dto.response.UserEmailResponse;
 import ru.bikbaev.moneytransferapi.core.entity.EmailData;
 import ru.bikbaev.moneytransferapi.core.entity.User;
 import ru.bikbaev.moneytransferapi.core.exception.EmailNotFoundException;
+import ru.bikbaev.moneytransferapi.core.service.EmailDataService;
+import ru.bikbaev.moneytransferapi.core.service.UserService;
+import ru.bikbaev.moneytransferapi.core.validation.AccessValidator;
+import ru.bikbaev.moneytransferapi.core.validation.EmailDataValidator;
+import ru.bikbaev.moneytransferapi.dto.Email;
+import ru.bikbaev.moneytransferapi.dto.response.EmailResponse;
+import ru.bikbaev.moneytransferapi.dto.response.UserEmailResponse;
 import ru.bikbaev.moneytransferapi.mapper.EmailDataMapper;
 import ru.bikbaev.moneytransferapi.repository.EmailDataRepository;
 import ru.bikbaev.moneytransferapi.security.JwtService;
-import ru.bikbaev.moneytransferapi.core.validation.AccessValidator;
-import ru.bikbaev.moneytransferapi.core.validation.EmailDataValidator;
+
+import java.util.List;
 
 @Service
 public class EmailDataServiceImpl implements EmailDataService {
@@ -39,6 +42,17 @@ public class EmailDataServiceImpl implements EmailDataService {
         return repository.findByEmail(email).orElseThrow(
                 () -> new EmailNotFoundException("Email " + email + " not found")
         );
+    }
+
+    @Override
+    public List<Email> findAllEmailByIdUser(Long idUser) {
+        return mapper.allToEmail(repository.findByUserId(idUser));
+    }
+
+    @Override
+    public List<EmailResponse> getEmailUser(String token) {
+        Long userId = jwtService.extractUserId(token);
+        return mapper.allToEmailResponse(repository.findByUserId(userId));
     }
 
 

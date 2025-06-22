@@ -8,6 +8,10 @@ import ru.bikbaev.moneytransferapi.core.entity.User;
 
 public interface UserService {
 
+    UserResponseDto findById(Long id);
+
+    UserResponseDto getUserProfile(String token);
+
     User findEntityUserById(Long id);
 
     Page<UserResponseDto> searchUsers(UserParamsSearch params, Pageable pageable);

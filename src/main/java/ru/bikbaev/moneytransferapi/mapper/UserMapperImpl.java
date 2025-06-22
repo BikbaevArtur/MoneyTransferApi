@@ -4,8 +4,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.bikbaev.moneytransferapi.dto.LoginUserDate;
-import ru.bikbaev.moneytransferapi.dto.request.Email;
-import ru.bikbaev.moneytransferapi.dto.request.PhoneNumber;
+import ru.bikbaev.moneytransferapi.dto.Email;
+import ru.bikbaev.moneytransferapi.dto.PhoneNumber;
 import ru.bikbaev.moneytransferapi.dto.response.UserResponseDto;
 import ru.bikbaev.moneytransferapi.core.entity.User;
 
