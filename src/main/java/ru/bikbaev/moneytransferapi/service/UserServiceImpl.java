@@ -1,5 +1,6 @@
 package ru.bikbaev.moneytransferapi.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -14,6 +15,7 @@ import ru.bikbaev.moneytransferapi.repository.UserRepository;
 import ru.bikbaev.moneytransferapi.repository.spec.UserSpecification;
 import ru.bikbaev.moneytransferapi.security.JwtService;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
@@ -39,6 +41,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findEntityUserById(Long id) {
+        log.info("Searching User by user_id={}", id);
         return repository.findById(id).orElseThrow(
                 () -> new UserNotFoundException("User not found")
         );

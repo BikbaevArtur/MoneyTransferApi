@@ -1,5 +1,6 @@
 package ru.bikbaev.moneytransferapi.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.bikbaev.moneytransferapi.core.entity.EmailData;
 import ru.bikbaev.moneytransferapi.core.entity.User;
@@ -17,6 +18,7 @@ import ru.bikbaev.moneytransferapi.security.JwtService;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class EmailDataServiceImpl implements EmailDataService {
 
@@ -39,6 +41,7 @@ public class EmailDataServiceImpl implements EmailDataService {
 
     @Override
     public EmailData findByEmail(String email) {
+        log.info("Searching EmailData by email={}", email);
         return repository.findByEmail(email).orElseThrow(
                 () -> new EmailNotFoundException("Email " + email + " not found")
         );
@@ -61,42 +64,49 @@ public class EmailDataServiceImpl implements EmailDataService {
 
         Long userId = jwtService.extractUserId(token);
 
+        log.info("Adding email={} to user_id={}", email.getEmail(), userId);
+
         User user = userService.findEntityUserById(userId);
 
         emailDataValidator.validationEmailUniq(email);
 
         EmailData emailData = EmailData.builder().email(email.getEmail()).user(user).build();
 
+        log.info("Successfully added email={} to user_id={}", email.getEmail(), userId);
         return mapper.toDto(repository.save(emailData));
     }
 
     @Override
     public UserEmailResponse updateEmail(String token, Long idEmail, Email newEmail) {
-        Long userid = jwtService.extractUserId(token);
+        Long userId = jwtService.extractUserId(token);
+
+        log.info("Updating email_id={} for user_id={} to new email={}", idEmail, userId, newEmail.getEmail());
 
         EmailData emailData = findByEntityById(idEmail);
 
-        accessValidator.validateEmailOwnership(emailData, userid);
+        accessValidator.validateEmailOwnership(emailData, userId);
 
-        if (!newEmail.getEmail().equals(emailData.getEmail())) {
-            emailDataValidator.validationEmailUniq(newEmail);
-            emailData.setEmail(newEmail.getEmail());
-            return mapper.toDto(repository.save(emailData));
-        }
+        emailDataValidator.validateEmailChange(emailData.getEmail(), newEmail.getEmail());
+        emailDataValidator.validationEmailUniq(newEmail);
 
-        return mapper.toDto(emailData);
+        emailData.setEmail(newEmail.getEmail());
+        log.info("Successfully updated email_id={} for user_id={} to new email {}", idEmail, userId, newEmail.getEmail());
+        return mapper.toDto(repository.save(emailData));
     }
 
     @Override
     public void deleteEmail(String token, Long idEmail) {
-        EmailData emailData = findByEntityById(idEmail);
-
         Long userId = jwtService.extractUserId(token);
+
+        log.info("Deleting email_id={} for user_id={}", idEmail, userId);
+
+        EmailData emailData = findByEntityById(idEmail);
 
         accessValidator.validateEmailOwnership(emailData, userId);
 
         emailDataValidator.validateMinimumEmailCount(userId);
 
+        log.info("Successfully deleted email_id={} for user_id={}", idEmail, userId);
         repository.deleteById(idEmail);
 
     }

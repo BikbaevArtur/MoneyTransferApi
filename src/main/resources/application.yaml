@@ -12,8 +12,6 @@ spring:
     show-sql: true
 
 
-
-
   liquibase:
     enabled: true
 
@@ -23,7 +21,4 @@ spring:
       expiration-time-access: 3600000
 
 
-logging:
-  level:
-    org.springframework.transaction.interceptor: trace
-    com.zaxxer.hikari.pool.HikariPool: debug
+

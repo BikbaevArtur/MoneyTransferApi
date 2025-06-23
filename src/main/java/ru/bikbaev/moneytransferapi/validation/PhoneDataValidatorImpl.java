@@ -1,6 +1,7 @@
 package ru.bikbaev.moneytransferapi.validation;
 
 import org.springframework.stereotype.Component;
+import ru.bikbaev.moneytransferapi.core.exception.PhoneNotChangedException;
 import ru.bikbaev.moneytransferapi.core.validation.PhoneDataValidator;
 import ru.bikbaev.moneytransferapi.dto.PhoneNumber;
 import ru.bikbaev.moneytransferapi.core.exception.MinimumPhoneRequiredException;
@@ -26,6 +27,13 @@ public class PhoneDataValidatorImpl implements PhoneDataValidator {
     public void validateMinimumPhoneCount(Long userId) {
         if (repository.countByUserId(userId) <= 1) {
             throw new MinimumPhoneRequiredException("User must have at least one phone");
+        }
+    }
+
+    @Override
+    public void validatePhoneChange(String oldPhone, String newPhone) {
+        if(newPhone.equals(oldPhone)){
+            throw new PhoneNotChangedException("The phone number is the same as the current one.");
         }
     }
 }

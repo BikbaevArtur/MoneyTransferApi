@@ -19,4 +19,13 @@ public interface PhoneDataValidator {
      * @param userId id пользователя
      */
     void validateMinimumPhoneCount(Long userId);
+
+
+    /**
+     * Проверка на идентичность старого номера телефона и нового
+     * Если они идентичны выбрасывается PhoneNotChangedException
+     * @param oldPhone старый номер
+     * @param newPhone новый номер
+     */
+    void validatePhoneChange(String oldPhone,String newPhone);
 }

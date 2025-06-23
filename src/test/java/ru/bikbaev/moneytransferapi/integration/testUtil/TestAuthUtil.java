@@ -1,13 +1,11 @@
 package ru.bikbaev.moneytransferapi.integration.testUtil;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import ru.bikbaev.moneytransferapi.dto.request.LoginRequest;
-import ru.bikbaev.moneytransferapi.dto.response.AccessTokenResponse;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -28,7 +26,7 @@ public class TestAuthUtil {
                 .content(objectMapper.writeValueAsString(loginRequest))
         ).andReturn();
 
-        String response  = result.getResponse().getContentAsString();
+        String response = result.getResponse().getContentAsString();
         return objectMapper.readTree(response).get("token").asText();
     }
 }

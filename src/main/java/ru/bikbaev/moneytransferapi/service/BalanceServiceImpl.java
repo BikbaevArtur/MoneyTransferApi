@@ -1,5 +1,6 @@
 package ru.bikbaev.moneytransferapi.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class BalanceServiceImpl implements BalanceService {
     private final JwtService jwtService;
@@ -42,11 +44,14 @@ public class BalanceServiceImpl implements BalanceService {
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public void accruePercentageToBalances() {
+        log.info("Starting accrual of interest to account balances");
         int pageNumber = 0;
         Page<Account> page;
 
+        int totalUpdatedAccounts = 0;
         do {
             page = repository.findAllWithLock(PageRequest.of(pageNumber, PAGE_SIZE));
+            log.info("Processing page {} with {} accounts", pageNumber, page.getNumberOfElements());
 
             List<Account> accountsToUpdate = new ArrayList<>();
 
@@ -64,17 +69,21 @@ public class BalanceServiceImpl implements BalanceService {
             }
 
             repository.saveAll(accountsToUpdate);
+            log.info("Updated {} accounts on page {}", accountsToUpdate.size(), pageNumber);
+
+            totalUpdatedAccounts += accountsToUpdate.size();
             pageNumber++;
 
         } while (!page.isLast());
+        log.info("Finished accrual, total updated accounts: {}", totalUpdatedAccounts);
     }
 
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public TransferMoneyResponse transferMoney(String token, TransferMoneyRequest request) {
-
         Long fromUserId = jwtService.extractUserId(token);
+        log.info("Start money transfer from_user_id={} to_user_id={} amount={}",fromUserId,request.getToUserId(),request.getAmount());
 
         Long toUserId = request.getToUserId();
         BigDecimal amount = request.getAmount();
@@ -96,7 +105,10 @@ public class BalanceServiceImpl implements BalanceService {
         accountFromTransfer.setBalance(fromTransferBalance);
         accountToTransfer.setBalance(toTransferBalance);
 
+
         repository.saveAll(List.of(accountToTransfer, accountFromTransfer));
+        log.info("Transfer successful: from_user_id={} to_user_id={} amount={}", fromUserId, toUserId, amount);
+
         return TransferMoneyResponse.builder()
                 .fromUserName(accountFromTransfer.getUser().getName())
                 .toUserName(accountToTransfer.getUser().getName())
@@ -109,13 +121,16 @@ public class BalanceServiceImpl implements BalanceService {
     @Override
     public UserBalanceResponse getUserBalance(String token) {
         Long userId = jwtService.extractUserId(token);
+        log.info("Search user_account by user_id={}",userId);
+
         Account userAccount = repository.findByIdUserFetch(userId).orElseThrow(
-                ()-> new AccountNotFoundException("Account not found")
+                () -> new AccountNotFoundException("Account not found")
         );
-        return new UserBalanceResponse(userAccount.getUser().getName(),userAccount.getBalance());
+        return new UserBalanceResponse(userAccount.getUser().getName(), userAccount.getBalance());
     }
 
     private Account findByIdUser(Long id) {
+        log.info("With lock search user_account by user_id={}",id);
         return repository.findByIdUserWithLock(id).orElseThrow(
                 () -> new AccountNotFoundException("Account not found")
         );
