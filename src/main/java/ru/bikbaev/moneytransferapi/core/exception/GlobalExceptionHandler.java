@@ -43,8 +43,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InsufficientFundsException.class)
     public ResponseEntity<ErrorResponse> handler(InsufficientFundsException ex){
-        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST,ex.getMessage(),LocalDateTime.now());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT,ex.getMessage(),LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
     @ExceptionHandler(MinimumEmailRequiredException.class)
