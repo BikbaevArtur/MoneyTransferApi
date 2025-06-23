@@ -1,6 +1,5 @@
 package ru.bikbaev.moneytransferapi;
 
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.bikbaev.moneytransferapi.core.entity.Account;
@@ -42,7 +41,7 @@ public class TestData {
         for (int i = 0; i < COUNT_TEST_USER; i++) {
 
             User user = User.builder()
-                    .name(nameUser +" "+i)
+                    .name(nameUser + " " + i)
                     .dateOfBirth(getRandomDate())
                     .password(encoder.encode(password))
                     .build();

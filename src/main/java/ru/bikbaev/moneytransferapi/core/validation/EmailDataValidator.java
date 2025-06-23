@@ -20,4 +20,13 @@ public interface EmailDataValidator {
      */
     void validateMinimumEmailCount(Long userId);
 
+
+    /**
+     * Проверка на идентичность старого email и нового
+     * Если они идентичны выбрасывается EmailNotChangedException
+     * @param oldEmail старый email
+     * @param newEmail новый email
+     */
+    void validateEmailChange(String oldEmail,String newEmail);
+
 }
