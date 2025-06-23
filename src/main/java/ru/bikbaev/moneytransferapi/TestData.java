@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Component
-@Profile("test")
+//@Profile("test")
 public class TestData {
     private UserRepository userRepository;
     private AccountRepository accountRepository;
