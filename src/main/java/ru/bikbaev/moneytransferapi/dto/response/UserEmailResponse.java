@@ -20,6 +20,6 @@ public class UserEmailResponse {
     @Schema(description = "id email", example = "1")
     private final Long emailId;
 
-    @Schema(description = "Email пользователя", example = "test0@mail.ru")
+    @Schema(description = "EmailUser пользователя", example = "test0@mail.ru")
     private final String email;
 }

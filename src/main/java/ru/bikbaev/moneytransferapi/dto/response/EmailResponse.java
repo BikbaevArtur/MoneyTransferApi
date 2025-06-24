@@ -14,6 +14,6 @@ public class EmailResponse {
     @Schema(description = "id email", example = "1")
     private Long idEmail;
 
-    @Schema(description = "Email пользователя", example = "test0@mail.ru")
+    @Schema(description = "EmailUser пользователя", example = "test0@mail.ru")
     private String email;
 }

@@ -4,6 +4,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ru.bikbaev.moneytransferapi.core.exception.EmailNotFoundException;
+import ru.bikbaev.moneytransferapi.core.exception.PhoneNotFoundException;
 import ru.bikbaev.moneytransferapi.dto.LoginUserDate;
 import ru.bikbaev.moneytransferapi.mapper.UserMapper;
 import ru.bikbaev.moneytransferapi.core.service.AuthUserService;
@@ -20,9 +22,13 @@ public class CustomUserDetailService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        LoginUserDate loginUserDate = authUserService.findByEmailOrPhone(username);
-        return userMapper.toUserDetails(loginUserDate);
+    public UserDetails loadUserByUsername(String username){
+        try{
+            LoginUserDate loginUserDate = authUserService.findByEmailOrPhone(username);
+            return userMapper.toUserDetails(loginUserDate);
+        }catch (EmailNotFoundException | PhoneNotFoundException e){
+            throw new UsernameNotFoundException(e.getMessage());
+        }
     }
 
 

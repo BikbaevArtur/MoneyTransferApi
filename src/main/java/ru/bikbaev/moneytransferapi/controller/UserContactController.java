@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.bikbaev.moneytransferapi.core.service.EmailDataService;
 import ru.bikbaev.moneytransferapi.core.service.PhoneDataService;
-import ru.bikbaev.moneytransferapi.dto.Email;
+import ru.bikbaev.moneytransferapi.dto.EmailUser;
 import ru.bikbaev.moneytransferapi.dto.PhoneNumber;
 import ru.bikbaev.moneytransferapi.dto.response.EmailResponse;
 import ru.bikbaev.moneytransferapi.dto.response.PhoneNumberResponse;
@@ -31,7 +31,7 @@ public class UserContactController {
 
     @Operation(summary = "Add email for authenticated user")
     @PostMapping("/email")
-    public ResponseEntity<UserEmailResponse> addEmail(@Valid @RequestBody Email email,
+    public ResponseEntity<UserEmailResponse> addEmail(@Valid @RequestBody EmailUser email,
                                                       @RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.substring(7);
         return ResponseEntity.status(HttpStatus.CREATED).body(emailService.addEmail(token, email));
@@ -39,7 +39,7 @@ public class UserContactController {
 
     @Operation(summary = "Get all emails by user id")
     @GetMapping("/email/user/{id}")
-    public ResponseEntity<List<Email>> findByUserId(@PathVariable Long id) {
+    public ResponseEntity<List<EmailUser>> findByUserId(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(emailService.findAllEmailByIdUser(id));
     }
 
@@ -53,7 +53,7 @@ public class UserContactController {
     @Operation(summary = "Update email by id for authenticated user")
     @PutMapping("/email/{id}")
     public ResponseEntity<UserEmailResponse> updateEmail(@PathVariable Long id,
-                                                         @Valid @RequestBody Email email,
+                                                         @Valid @RequestBody EmailUser email,
                                                          @RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.substring(7);
         return ResponseEntity.status(HttpStatus.OK).body(emailService.updateEmail(token, id, email));

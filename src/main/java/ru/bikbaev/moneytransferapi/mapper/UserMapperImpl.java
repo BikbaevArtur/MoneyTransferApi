@@ -3,8 +3,8 @@ package ru.bikbaev.moneytransferapi.mapper;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import ru.bikbaev.moneytransferapi.dto.EmailUser;
 import ru.bikbaev.moneytransferapi.dto.LoginUserDate;
-import ru.bikbaev.moneytransferapi.dto.Email;
 import ru.bikbaev.moneytransferapi.dto.PhoneNumber;
 import ru.bikbaev.moneytransferapi.dto.response.UserResponseDto;
 import ru.bikbaev.moneytransferapi.core.entity.User;
@@ -21,9 +21,9 @@ public class UserMapperImpl implements UserMapper {
                 .map(e -> new PhoneNumber(e.getPhone()))
                 .collect(Collectors.toList());
 
-        List<Email> emails = user.getEmails()
+        List<EmailUser> emails = user.getEmails()
                 .stream()
-                .map(e -> new Email(e.getEmail()))
+                .map(e -> new EmailUser(e.getEmail()))
                 .collect(Collectors.toList());
 
         return UserResponseDto.builder()

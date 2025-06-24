@@ -9,7 +9,7 @@ import ru.bikbaev.moneytransferapi.core.service.EmailDataService;
 import ru.bikbaev.moneytransferapi.core.service.UserService;
 import ru.bikbaev.moneytransferapi.core.validation.AccessValidator;
 import ru.bikbaev.moneytransferapi.core.validation.EmailDataValidator;
-import ru.bikbaev.moneytransferapi.dto.Email;
+import ru.bikbaev.moneytransferapi.dto.EmailUser;
 import ru.bikbaev.moneytransferapi.dto.response.EmailResponse;
 import ru.bikbaev.moneytransferapi.dto.response.UserEmailResponse;
 import ru.bikbaev.moneytransferapi.mapper.EmailDataMapper;
@@ -43,12 +43,12 @@ public class EmailDataServiceImpl implements EmailDataService {
     public EmailData findByEmail(String email) {
         log.debug("Searching EmailData by email={}", email);
         return repository.findByEmail(email).orElseThrow(
-                () -> new EmailNotFoundException("Email " + email + " not found")
+                () -> new EmailNotFoundException("EmailUser " + email + " not found")
         );
     }
 
     @Override
-    public List<Email> findAllEmailByIdUser(Long idUser) {
+    public List<EmailUser> findAllEmailByIdUser(Long idUser) {
         return mapper.allToEmail(repository.findByUserId(idUser));
     }
 
@@ -60,7 +60,7 @@ public class EmailDataServiceImpl implements EmailDataService {
 
 
     @Override
-    public UserEmailResponse addEmail(String token, Email email) {
+    public UserEmailResponse addEmail(String token, EmailUser email) {
 
         Long userId = jwtService.extractUserId(token);
 
@@ -77,7 +77,7 @@ public class EmailDataServiceImpl implements EmailDataService {
     }
 
     @Override
-    public UserEmailResponse updateEmail(String token, Long idEmail, Email newEmail) {
+    public UserEmailResponse updateEmail(String token, Long idEmail, EmailUser newEmail) {
         Long userId = jwtService.extractUserId(token);
 
         log.debug("Updating email_id={} for user_id={} to new email={}", idEmail, userId, newEmail.getEmail());
@@ -115,7 +115,7 @@ public class EmailDataServiceImpl implements EmailDataService {
     private EmailData findByEntityById(Long idEmail) {
         log.debug("Search EmailData by id={}",idEmail);
         return repository.findByIdEntity(idEmail).orElseThrow(
-                () -> new EmailNotFoundException("Email not found")
+                () -> new EmailNotFoundException("EmailUser not found")
         );
     }
 

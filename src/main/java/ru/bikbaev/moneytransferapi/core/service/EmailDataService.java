@@ -1,6 +1,6 @@
 package ru.bikbaev.moneytransferapi.core.service;
 
-import ru.bikbaev.moneytransferapi.dto.Email;
+import ru.bikbaev.moneytransferapi.dto.EmailUser;
 import ru.bikbaev.moneytransferapi.dto.response.EmailResponse;
 import ru.bikbaev.moneytransferapi.dto.response.UserEmailResponse;
 import ru.bikbaev.moneytransferapi.core.entity.EmailData;
@@ -17,11 +17,11 @@ public interface EmailDataService {
     EmailData findByEmail(String email);
 
     /**
-     * Поиск всех Email по id пользователя
+     * Поиск всех EmailUser по id пользователя
      * @param idUser id пользователя
      * @return список email
      */
-    List<Email> findAllEmailByIdUser(Long idUser);
+    List<EmailUser> findAllEmailByIdUser(Long idUser);
 
     /**
      * Получение всех email пользователя по токену авторизации
@@ -37,7 +37,7 @@ public interface EmailDataService {
      * @param email email
      * @return данные о пользователе, и данные нового email
      */
-    UserEmailResponse addEmail(String token, Email email);
+    UserEmailResponse addEmail(String token, EmailUser email);
 
     /**
      * Обнавление существующего email по id email
@@ -51,7 +51,7 @@ public interface EmailDataService {
      * @param newEmail новый email
      * @return данные о пользователе и email
      */
-    UserEmailResponse updateEmail(String token, Long idEmail, Email newEmail);
+    UserEmailResponse updateEmail(String token, Long idEmail, EmailUser newEmail);
 
     /**
      * Удаление email у пользователя по email
@@ -59,7 +59,7 @@ public interface EmailDataService {
      * Проверяется, принадлежит ли email пользователю
      * Проверяется минимальное количество email — должно быть хотя бы 1, иначе выбрасывается исключение
      * @param token Токен авторизации
-     * @param idEmail id Email
+     * @param idEmail id EmailUser
      */
     void deleteEmail(String token, Long idEmail);
 }

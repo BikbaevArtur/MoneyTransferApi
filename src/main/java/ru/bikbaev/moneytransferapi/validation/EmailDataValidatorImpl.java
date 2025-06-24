@@ -3,7 +3,7 @@ package ru.bikbaev.moneytransferapi.validation;
 import org.springframework.stereotype.Component;
 import ru.bikbaev.moneytransferapi.core.exception.EmailNotChangedException;
 import ru.bikbaev.moneytransferapi.core.validation.EmailDataValidator;
-import ru.bikbaev.moneytransferapi.dto.Email;
+import ru.bikbaev.moneytransferapi.dto.EmailUser;
 import ru.bikbaev.moneytransferapi.core.exception.EmailAlreadyExistException;
 import ru.bikbaev.moneytransferapi.core.exception.MinimumEmailRequiredException;
 import ru.bikbaev.moneytransferapi.repository.EmailDataRepository;
@@ -18,9 +18,9 @@ public class EmailDataValidatorImpl implements EmailDataValidator {
     }
 
     @Override
-    public void validationEmailUniq(Email email) {
+    public void validationEmailUniq(EmailUser email) {
         if (repository.existsByEmail(email.getEmail())) {
-            throw new EmailAlreadyExistException("Email " + email.getEmail() + " already exists");
+            throw new EmailAlreadyExistException("EmailUser " + email.getEmail() + " already exists");
         }
     }
 

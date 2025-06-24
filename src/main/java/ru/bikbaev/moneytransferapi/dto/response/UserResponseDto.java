@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import ru.bikbaev.moneytransferapi.dto.Email;
+import ru.bikbaev.moneytransferapi.dto.EmailUser;
 import ru.bikbaev.moneytransferapi.dto.PhoneNumber;
 
 import java.time.LocalDate;
@@ -30,5 +30,5 @@ public class UserResponseDto {
     private final List<PhoneNumber> phones;
 
     @Schema(description = "Список email пользователя")
-    private final List<Email> emails;
+    private final List<EmailUser> emails;
 }
