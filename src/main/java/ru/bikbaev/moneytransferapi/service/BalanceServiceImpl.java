@@ -44,14 +44,14 @@ public class BalanceServiceImpl implements BalanceService {
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public void accruePercentageToBalances() {
-        log.info("Starting accrual of interest to account balances");
+        log.debug("Starting accrual of interest to account balances");
         int pageNumber = 0;
         Page<Account> page;
 
         int totalUpdatedAccounts = 0;
         do {
             page = repository.findAllWithLock(PageRequest.of(pageNumber, PAGE_SIZE));
-            log.info("Processing page {} with {} accounts", pageNumber, page.getNumberOfElements());
+            log.debug("Processing page {} with {} accounts", pageNumber, page.getNumberOfElements());
 
             List<Account> accountsToUpdate = new ArrayList<>();
 
@@ -83,7 +83,7 @@ public class BalanceServiceImpl implements BalanceService {
     @Override
     public TransferMoneyResponse transferMoney(String token, TransferMoneyRequest request) {
         Long fromUserId = jwtService.extractUserId(token);
-        log.info("Start money transfer from_user_id={} to_user_id={} amount={}",fromUserId,request.getToUserId(),request.getAmount());
+        log.debug("Start money transfer from_user_id={} to_user_id={} amount={}",fromUserId,request.getToUserId(),request.getAmount());
 
         Long toUserId = request.getToUserId();
         BigDecimal amount = request.getAmount();
@@ -121,7 +121,7 @@ public class BalanceServiceImpl implements BalanceService {
     @Override
     public UserBalanceResponse getUserBalance(String token) {
         Long userId = jwtService.extractUserId(token);
-        log.info("Search user_account by user_id={}",userId);
+        log.debug("Search user_account by user_id={}",userId);
 
         Account userAccount = repository.findByIdUserFetch(userId).orElseThrow(
                 () -> new AccountNotFoundException("Account not found")
@@ -130,7 +130,7 @@ public class BalanceServiceImpl implements BalanceService {
     }
 
     private Account findByIdUser(Long id) {
-        log.info("With lock search user_account by user_id={}",id);
+        log.debug("With lock search user_account by user_id={}",id);
         return repository.findByIdUserWithLock(id).orElseThrow(
                 () -> new AccountNotFoundException("Account not found")
         );

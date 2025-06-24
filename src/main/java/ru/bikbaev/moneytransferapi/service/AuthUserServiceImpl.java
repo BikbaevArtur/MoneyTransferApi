@@ -42,7 +42,7 @@ public class AuthUserServiceImpl implements AuthUserService {
 
     @Override
     public AccessTokenResponse authenticate(LoginRequest request) {
-        log.info("Start authentication user login={}",request.getLogin());
+        log.debug("Start authentication user login={}",request.getLogin());
 
         validator.validateLogin(request.getLogin());
 

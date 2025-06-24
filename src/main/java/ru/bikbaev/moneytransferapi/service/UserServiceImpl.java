@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findEntityUserById(Long id) {
-        log.info("Searching User by user_id={}", id);
+        log.debug("Searching User by user_id={}", id);
         return repository.findById(id).orElseThrow(
                 () -> new UserNotFoundException("User not found")
         );
