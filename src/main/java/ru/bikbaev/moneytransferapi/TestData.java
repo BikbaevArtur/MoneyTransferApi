@@ -1,5 +1,6 @@
 package ru.bikbaev.moneytransferapi;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.bikbaev.moneytransferapi.core.entity.Account;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Component
-//@Profile("test")
+@Profile("test")
 public class TestData {
     private UserRepository userRepository;
     private AccountRepository accountRepository;
@@ -29,7 +30,7 @@ public class TestData {
     private PhoneDataRepository phoneDataRepository;
 
 
-    private final int COUNT_TEST_USER = 2;
+    private final int COUNT_TEST_USER = 50;
 
     public TestData(UserRepository userRepository, AccountRepository accountRepository, EmailDataRepository emailDataRepository, PhoneDataRepository phoneDataRepository, PasswordEncoder encoder) {
         this.userRepository = userRepository;
