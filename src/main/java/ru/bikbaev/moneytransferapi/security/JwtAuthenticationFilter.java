@@ -1,6 +1,7 @@
 package ru.bikbaev.moneytransferapi.security;
 
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final HandlerExceptionResolver handler;
@@ -43,7 +44,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
 
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+
+        if (authHeader == null) {
+            log.trace("No Authorization header provided");
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        if (!authHeader.startsWith("Bearer ")) {
+            log.trace("Malformed Authorization header: {}", authHeader);
             filterChain.doFilter(request, response);
             return;
         }
@@ -53,6 +62,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             final String token = authHeader.substring(7);
 
             final String login = jwtService.extractLogin(token);
+
+            log.debug("Extracted login from token: {}", login);
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -66,12 +77,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                             );
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
-                }
 
+                    log.debug("User authenticated: {}", login);
+                }else {
+                    log.warn("Invalid token for user: {}", login);
+                }
+            } else if (authentication != null) {
+                log.trace("SecurityContext already contains authentication: {}", authentication.getName());
             }
 
             filterChain.doFilter(request, response);
         } catch (Exception e) {
+            log.warn("Authentication exception: {}", e.getMessage());
             handler.resolveException(request, response, null, e);
         }
 

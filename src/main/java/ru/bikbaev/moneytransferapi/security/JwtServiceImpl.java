@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class JwtServiceImpl implements JwtService {
 
@@ -27,6 +29,7 @@ public class JwtServiceImpl implements JwtService {
 
 
     public String generateToken(UserDetails userDetails, Long userId) {
+        log.debug("Generating token for user_id={}, username={}", userId, userDetails.getUsername());
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId);
         return buildToken(claims, userDetails, expiration);
@@ -35,17 +38,21 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        return isUsernameValid(token, userDetails) && isTokenDateValid(token);
+        boolean valid = isUsernameValid(token, userDetails) && isTokenDateValid(token);
+        log.debug("Token valid={} for username={}", valid, userDetails.getUsername());
+        return  valid;
     }
 
     @Override
     public Long extractUserId(String token) {
+        log.trace("Extracting userId from token");
         String userId = extractAllClaims(token).get("userId").toString();
         return Long.parseLong(userId);
     }
 
     @Override
     public String extractLogin(String token) {
+        log.trace("Extracting login from token");
         return extractAllClaims(token).getSubject();
     }
 

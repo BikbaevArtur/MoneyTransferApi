@@ -62,7 +62,7 @@ public class PhoneDataServiceImpl implements PhoneDataService {
 
         Long userId = jwtService.extractUserId(token);
 
-        log.debug("Adding phone={} to user_id={}", phoneNumber.getPhoneNumber(), userId);
+        log.info("Adding phone={} to user_id={}", phoneNumber.getPhoneNumber(), userId);
 
         User user = userService.findEntityUserById(userId);
 
@@ -78,7 +78,7 @@ public class PhoneDataServiceImpl implements PhoneDataService {
     public UserPhoneResponse updatePhoneNumber(String token, Long idPhoneNumber, PhoneNumber newPhoneNumber) {
         Long userId = jwtService.extractUserId(token);
 
-        log.debug("Updating phone_id={} for user_id={} to new phone={}", idPhoneNumber, userId, newPhoneNumber.getPhoneNumber());
+        log.info("Updating phone_id={} for user_id={} to new phone={}", idPhoneNumber, userId, newPhoneNumber.getPhoneNumber());
 
         PhoneData phoneData = findEntityById(idPhoneNumber);
 
@@ -96,7 +96,7 @@ public class PhoneDataServiceImpl implements PhoneDataService {
     public void deletePhoneNumber(String token, Long idPhoneNumber) {
         Long userId = jwtService.extractUserId(token);
 
-        log.debug("Deleting phone_id={} for user_id={}", idPhoneNumber, userId);
+        log.info("Deleting phone_id={} for user_id={}", idPhoneNumber, userId);
 
         PhoneData phoneData = findEntityById(idPhoneNumber);
 

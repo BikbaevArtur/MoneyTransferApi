@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+
+    <appender name="INFO_ROOT_JSON" class="ch.qos.logback.core.FileAppender">
+        <file>./host_metrics_app/info_root.log</file>
+        <append>true</append>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <appender name="WARN_ROOT_JSON" class="ch.qos.logback.core.FileAppender">
+        <file>./host_metrics_app/warn_root.log</file>
+        <append>true</append>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+
+    <appender name="ERROR_ROOT_JSON" class="ch.qos.logback.core.FileAppender">
+        <file>./host_metrics_app/error_root.log</file>
+        <append>true</append>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <appender name="INFO_BALANCE_SERVICE" class="ch.qos.logback.core.FileAppender">
+        <file>./host_metrics_app/info_balance_service.log</file>
+        <append>true</append>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <appender name="ERROR_BALANCE_SERVICE" class="ch.qos.logback.core.FileAppender">
+        <file>./host_metrics_app/error_balance_service.log</file>
+        <append>true</append>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <appender name="INFO_SECURITY_JSON" class="ch.qos.logback.core.FileAppender">
+        <file>./host_metrics_app/info_security.log</file>
+        <append>true</append>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <appender name="WARN_SECURITY_JSON" class="ch.qos.logback.core.FileAppender">
+        <file>./host_metrics_app/warn_security.log</file>
+        <append>true</append>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+
+    <appender name="ERROR_SECURITY_JSON" class="ch.qos.logback.core.FileAppender">
+        <file>./host_metrics_app/error_security.log</file>
+        <append>true</append>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <appender name="INFO_SERVICE_JSON" class="ch.qos.logback.core.FileAppender">
+        <file>./host_metrics_app/info_service.log</file>
+        <append>true</append>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <appender name="WARN_SERVICE_JSON" class="ch.qos.logback.core.FileAppender">
+        <file>./host_metrics_app/warn_service.log</file>
+        <append>true</append>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+
+    <appender name="ERROR_SERVICE_JSON" class="ch.qos.logback.core.FileAppender">
+        <file>./host_metrics_app/error_service.log</file>
+        <append>true</append>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+
+
+    <root level="INFO">
+        <appender-ref ref="INFO_ROOT_JSON" />
+        <appender-ref ref="WARN_ROOT_JSON" />
+        <appender-ref ref="ERROR_ROOT_JSON" />
+    </root>
+
+    <logger name="ru.bikbaev.moneytransferapi.service.BalanceServiceImpl" level="INFO" additivity="true">
+        <appender-ref ref="INFO_BALANCE_SERVICE" />
+        <appender-ref ref="ERROR_BALANCE_SERVICE" />
+    </logger>
+
+    <logger name="ru.bikbaev.moneytransferapi.security" level="INFO" additivity="true">
+        <appender-ref ref="INFO_SECURITY_JSON"/>
+        <appender-ref ref="WARN_SECURITY_JSON"/>
+        <appender-ref ref="ERROR_SECURITY_JSON"/>
+    </logger>
+
+    <logger name="ru.bikbaev.moneytransferapi.service" level="INFO" additivity="true">
+        <appender-ref ref="INFO_SERVICE_JSON"/>
+        <appender-ref ref="WARN_SERVICE_JSON"/>
+        <appender-ref ref="ERROR_SERVICE_JSON"/>
+    </logger>
+
+
+
+</configuration>

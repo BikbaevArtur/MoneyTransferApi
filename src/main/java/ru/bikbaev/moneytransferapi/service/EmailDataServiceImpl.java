@@ -64,7 +64,7 @@ public class EmailDataServiceImpl implements EmailDataService {
 
         Long userId = jwtService.extractUserId(token);
 
-        log.debug("Adding email={} to user_id={}", email.getEmail(), userId);
+        log.info("Adding email={} to user_id={}", email.getEmail(), userId);
 
         User user = userService.findEntityUserById(userId);
 
@@ -80,7 +80,7 @@ public class EmailDataServiceImpl implements EmailDataService {
     public UserEmailResponse updateEmail(String token, Long idEmail, EmailUser newEmail) {
         Long userId = jwtService.extractUserId(token);
 
-        log.debug("Updating email_id={} for user_id={} to new email={}", idEmail, userId, newEmail.getEmail());
+        log.info("Updating email_id={} for user_id={} to new email={}", idEmail, userId, newEmail.getEmail());
 
         EmailData emailData = findByEntityById(idEmail);
 
@@ -98,7 +98,7 @@ public class EmailDataServiceImpl implements EmailDataService {
     public void deleteEmail(String token, Long idEmail) {
         Long userId = jwtService.extractUserId(token);
 
-        log.debug("Deleting email_id={} for user_id={}", idEmail, userId);
+        log.info("Deleting email_id={} for user_id={}", idEmail, userId);
 
         EmailData emailData = findByEntityById(idEmail);
 
