@@ -119,7 +119,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EmailNotChangedException.class)
     public ResponseEntity<ErrorResponse> handleEmailNotChangedException(EmailNotChangedException ex) {
-        log.warn("EmailUser update failed: {}", ex.getMessage());
+        log.warn("Email update failed: {}", ex.getMessage());
         ErrorResponse error = new ErrorResponse(
                 HttpStatus.CONFLICT,
                 ex.getMessage(),

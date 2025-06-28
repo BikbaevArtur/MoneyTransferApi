@@ -3,6 +3,7 @@ spring:
     active: test
   application:
     name: MoneyTransferApi
+
   datasource:
     url: jdbc:postgresql://localhost:5432/money_transfer
     username: admin
@@ -13,6 +14,11 @@ spring:
       ddl-auto: none
     show-sql: true
 
+  redis:
+    host: localhost
+    port: 6379
+    password: password
+
 
   liquibase:
     enabled: true
@@ -22,5 +28,8 @@ spring:
       secret-key-access: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
       expiration-time-access: 3600000
 
+
+server:
+  port: 8080
 
 

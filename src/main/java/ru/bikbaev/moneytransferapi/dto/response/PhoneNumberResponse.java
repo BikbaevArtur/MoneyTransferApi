@@ -5,11 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "DTO ответа с номером телефона пользователя")
-public class PhoneNumberResponse {
+public class PhoneNumberResponse implements Serializable {
 
     @Schema(description = "id номера телефона", example = "1")
     private Long idPhoneNumber;
