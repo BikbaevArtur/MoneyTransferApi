@@ -88,7 +88,6 @@ public class BalanceServiceImpl implements BalanceService {
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public TransferMoneyResponse transferMoney(String token, TransferMoneyRequest request) {
-        try {
             Long fromUserId = jwtService.extractUserId(token);
             log.info("Start money transfer from_user_id={} to_user_id={} amount={}", fromUserId, request.getToUserId(), request.getAmount());
 
@@ -123,14 +122,6 @@ public class BalanceServiceImpl implements BalanceService {
                     .currentBalance(accountFromTransfer.getBalance())
                     .dateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                     .build();
-        }catch (Exception ex){
-            log.error("Transfer failed: from_user_id={} to_user_id={} amount={}, reason={}",
-                    jwtService.extractUserId(token),
-                    request.getToUserId(),
-                    request.getAmount(),
-                    ex.getMessage(), ex);
-            throw ex;
-        }
     }
 
     @Override
