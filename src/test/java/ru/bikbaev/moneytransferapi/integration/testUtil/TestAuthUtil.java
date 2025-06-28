@@ -1,6 +1,7 @@
 package ru.bikbaev.moneytransferapi.integration.testUtil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MockMvc;
@@ -12,13 +13,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @Component
 
 public class TestAuthUtil {
-    private final MockMvc mockMvc;
-    private final ObjectMapper objectMapper;
+    @Autowired
+    private  MockMvc mockMvc;
+    @Autowired
+    private  ObjectMapper objectMapper;
 
-    public TestAuthUtil(MockMvc mockMvc, ObjectMapper objectMapper) {
-        this.mockMvc = mockMvc;
-        this.objectMapper = objectMapper;
-    }
+
 
     public String loginAndGetToken(LoginRequest loginRequest) throws Exception {
         MvcResult result = mockMvc.perform(post("/api/v1/auth/login")

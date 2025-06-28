@@ -2,6 +2,7 @@ package ru.bikbaev.moneytransferapi.integration.testUtil;
 
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.bikbaev.moneytransferapi.core.entity.Account;
@@ -22,19 +23,19 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class TestDataInitializerUtil {
-    private final UserRepository userRepository;
-    private final AccountRepository accountRepository;
-    private final EmailDataRepository emailDataRepository;
-    private final PhoneDataRepository phoneDataRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    public TestDataInitializerUtil(UserRepository userRepository, AccountRepository accountRepository, EmailDataRepository emailDataRepository, PhoneDataRepository phoneDataRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.accountRepository = accountRepository;
-        this.emailDataRepository = emailDataRepository;
-        this.phoneDataRepository = phoneDataRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private  AccountRepository accountRepository;
+    @Autowired
+    private  EmailDataRepository emailDataRepository;
+    @Autowired
+    private  PhoneDataRepository phoneDataRepository;
+    @Autowired
+    private  PasswordEncoder passwordEncoder;
+
+
 
 
     public List<TestDataDTO> createFullDataUsers(int countUsers) {
