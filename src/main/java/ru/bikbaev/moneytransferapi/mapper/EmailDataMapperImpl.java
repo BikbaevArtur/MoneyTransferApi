@@ -1,7 +1,7 @@
 package ru.bikbaev.moneytransferapi.mapper;
 
 import org.springframework.stereotype.Component;
-import ru.bikbaev.moneytransferapi.dto.EmailUser;
+import ru.bikbaev.moneytransferapi.dto.Email;
 import ru.bikbaev.moneytransferapi.dto.response.EmailResponse;
 import ru.bikbaev.moneytransferapi.dto.response.UserEmailResponse;
 import ru.bikbaev.moneytransferapi.core.entity.EmailData;
@@ -23,8 +23,8 @@ public class EmailDataMapperImpl implements EmailDataMapper {
     }
 
     @Override
-    public List<EmailUser> allToEmail(List<EmailData> emailData) {
-        return emailData.stream().map(e->new EmailUser(e.getEmail())).collect(Collectors.toList());
+    public List<Email> allToEmail(List<EmailData> emailData) {
+        return emailData.stream().map(e->new Email(e.getEmail())).collect(Collectors.toList());
     }
 
     @Override

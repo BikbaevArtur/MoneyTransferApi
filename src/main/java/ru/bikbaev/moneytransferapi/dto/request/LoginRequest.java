@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class LoginRequest {
 
-    @Schema(description = "EmailUser(test0@mail.ru) или номер телефона (79870000000) пользователя", example = "test0@mail.ru")
+    @Schema(description = "Email(test0@mail.ru) или номер телефона (79870000000) пользователя", example = "test0@mail.ru")
     @NotBlank(message = "Логин не может быть пустым")
     private String login;
 

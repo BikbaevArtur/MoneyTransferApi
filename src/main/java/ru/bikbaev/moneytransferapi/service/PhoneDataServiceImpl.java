@@ -1,6 +1,9 @@
 package ru.bikbaev.moneytransferapi.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import ru.bikbaev.moneytransferapi.core.entity.PhoneData;
 import ru.bikbaev.moneytransferapi.core.entity.User;
@@ -14,7 +17,6 @@ import ru.bikbaev.moneytransferapi.dto.response.PhoneNumberResponse;
 import ru.bikbaev.moneytransferapi.dto.response.UserPhoneResponse;
 import ru.bikbaev.moneytransferapi.mapper.PhoneDataMapper;
 import ru.bikbaev.moneytransferapi.repository.PhoneDataRepository;
-import ru.bikbaev.moneytransferapi.security.JwtService;
 
 import java.util.List;
 
@@ -23,20 +25,19 @@ import java.util.List;
 public class PhoneDataServiceImpl implements PhoneDataService {
 
     private final PhoneDataRepository repository;
-    private final JwtService jwtService;
     private final UserService userService;
     private final PhoneDataValidator phoneDataValidator;
     private final AccessValidator accessValidator;
     private final PhoneDataMapper mapper;
 
-    public PhoneDataServiceImpl(PhoneDataRepository repository, JwtService jwtService, UserService userService, PhoneDataValidator phoneDataValidator, AccessValidator accessValidator, PhoneDataMapper mapper) {
+    public PhoneDataServiceImpl(PhoneDataRepository repository, UserService userService, PhoneDataValidator phoneDataValidator, AccessValidator accessValidator, PhoneDataMapper mapper) {
         this.repository = repository;
-        this.jwtService = jwtService;
         this.userService = userService;
         this.phoneDataValidator = phoneDataValidator;
         this.accessValidator = accessValidator;
         this.mapper = mapper;
     }
+
 
     @Override
     public PhoneData findByPhone(String phone) {
@@ -46,21 +47,28 @@ public class PhoneDataServiceImpl implements PhoneDataService {
         );
     }
 
+
+    @Cacheable(value = "phone_numbers", key = "'findAllPhoneNumberByIdUser' + '_' +#idUser")
     @Override
     public List<PhoneNumber> findAllPhoneNumberByIdUser(Long idUser) {
         return mapper.allToPhoneNumber(repository.findByUserId(idUser));
     }
 
+
+    @Cacheable(value = "phone_numbers_response", key = "'getPhoneNumberUser' + '_' +#userId")
     @Override
-    public List<PhoneNumberResponse> getPhoneNumberUser(String token) {
-        Long userId = jwtService.extractUserId(token);
+    public List<PhoneNumberResponse> getPhoneNumberUser(Long userId) {
         return mapper.allToPhoneNumberResponse(repository.findByUserId(userId));
     }
 
-    @Override
-    public UserPhoneResponse addPhoneNumber(String token, PhoneNumber phoneNumber) {
 
-        Long userId = jwtService.extractUserId(token);
+    @Caching(evict = {
+            @CacheEvict(value = "phone_numbers", key = "'findAllPhoneNumberByIdUser_'+ #userId"),
+            @CacheEvict(value = "phone_numbers_response", key = "'getPhoneNumberUser_' + #userId")
+
+    })
+    @Override
+    public UserPhoneResponse addPhoneNumber(Long userId, PhoneNumber phoneNumber) {
 
         log.info("Adding phone={} to user_id={}", phoneNumber.getPhoneNumber(), userId);
 
@@ -74,10 +82,14 @@ public class PhoneDataServiceImpl implements PhoneDataService {
         return mapper.toDto(repository.save(phoneData));
     }
 
-    @Override
-    public UserPhoneResponse updatePhoneNumber(String token, Long idPhoneNumber, PhoneNumber newPhoneNumber) {
-        Long userId = jwtService.extractUserId(token);
 
+    @Caching(evict = {
+            @CacheEvict(value = "phone_numbers", key = "'findAllPhoneNumberByIdUser_'+ #userId"),
+            @CacheEvict(value = "phone_numbers_response", key = "'getPhoneNumberUser_' + #userId")
+
+    })
+    @Override
+    public UserPhoneResponse updatePhoneNumber(Long userId, Long idPhoneNumber, PhoneNumber newPhoneNumber) {
         log.info("Updating phone_id={} for user_id={} to new phone={}", idPhoneNumber, userId, newPhoneNumber.getPhoneNumber());
 
         PhoneData phoneData = findEntityById(idPhoneNumber);
@@ -92,10 +104,14 @@ public class PhoneDataServiceImpl implements PhoneDataService {
         return mapper.toDto(repository.save(phoneData));
     }
 
-    @Override
-    public void deletePhoneNumber(String token, Long idPhoneNumber) {
-        Long userId = jwtService.extractUserId(token);
 
+    @Caching(evict = {
+            @CacheEvict(value = "phone_numbers", key = "'findAllPhoneNumberByIdUser_'+ #userId"),
+            @CacheEvict(value = "phone_numbers_response", key = "'getPhoneNumberUser_' + #userId")
+
+    })
+    @Override
+    public void deletePhoneNumber(Long userId, Long idPhoneNumber) {
         log.info("Deleting phone_id={} for user_id={}", idPhoneNumber, userId);
 
         PhoneData phoneData = findEntityById(idPhoneNumber);
@@ -111,7 +127,7 @@ public class PhoneDataServiceImpl implements PhoneDataService {
 
 
     private PhoneData findEntityById(Long id) {
-        log.debug("Search PhoneData by id={}",id);
+        log.debug("Search PhoneData by id={}", id);
         return repository.findByIdEntity(id).orElseThrow(
                 () -> new PhoneNotFoundException("Phone not found")
         );

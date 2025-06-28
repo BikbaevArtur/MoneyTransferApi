@@ -26,7 +26,7 @@ public class UserParamsSearch {
     private String phone;
 
     @Schema(
-            description = "EmailUser пользователя (полное совподение)",
+            description = "Email пользователя (полное совподение)",
             example = "test0@mail.ru"
     )
     private String email;

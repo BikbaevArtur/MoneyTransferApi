@@ -1,6 +1,6 @@
 package ru.bikbaev.moneytransferapi.core.validation;
 
-import ru.bikbaev.moneytransferapi.dto.EmailUser;
+import ru.bikbaev.moneytransferapi.dto.Email;
 
 public interface EmailDataValidator {
 
@@ -8,9 +8,9 @@ public interface EmailDataValidator {
      * Проверка, что email уникален в системе.
      * Если такой email уже существует, выбрасывается EmailAlreadyExistException.
      *
-     * @param email EmailUser для проверки
+     * @param email Email для проверки
      */
-    void validationEmailUniq(EmailUser email);
+    void validationEmailUniq(Email email);
 
     /**
      * Проверка, что у пользователя больше одного email перед удалением.

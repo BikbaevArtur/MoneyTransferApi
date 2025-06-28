@@ -8,14 +8,15 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 @Schema(description = "DTO для номера телефона пользователя")
-public class PhoneNumber {
+public class PhoneNumber implements Serializable {
     @Schema(description = "Телефонный номер без знака +, 11-13 цифр, начинается с 7", example = "79870000000")
     @NotBlank(message = "Phone number must not be blank")
     @Pattern(regexp = "^7\\d{10,12}$", message = "Phone number must start with 7 and contain from 11 to 13 digits")
-    private final String phoneNumber;
+    private String phoneNumber;
 }
