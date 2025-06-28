@@ -1,12 +1,16 @@
 package ru.bikbaev.moneytransferapi.validation;
 
 import org.springframework.stereotype.Component;
+import ru.bikbaev.moneytransferapi.core.entity.EmailData;
 import ru.bikbaev.moneytransferapi.core.exception.EmailNotChangedException;
+import ru.bikbaev.moneytransferapi.core.exception.EmailNotFoundException;
 import ru.bikbaev.moneytransferapi.core.validation.EmailDataValidator;
 import ru.bikbaev.moneytransferapi.dto.Email;
 import ru.bikbaev.moneytransferapi.core.exception.EmailAlreadyExistException;
 import ru.bikbaev.moneytransferapi.core.exception.MinimumEmailRequiredException;
 import ru.bikbaev.moneytransferapi.repository.EmailDataRepository;
+
+import java.util.List;
 
 @Component
 public class EmailDataValidatorImpl implements EmailDataValidator {
@@ -35,6 +39,13 @@ public class EmailDataValidatorImpl implements EmailDataValidator {
     public void validateEmailChange(String oldEmail, String newEmail) {
         if(newEmail.equals(oldEmail)){
             throw new EmailNotChangedException("The new email address is the same as the current one.");
+        }
+    }
+
+    @Override
+    public void validateEmailIsNotEmpty(List<EmailData> emailDataList) {
+        if(emailDataList.isEmpty()){
+            throw new EmailNotFoundException("Emails not found or user not found");
         }
     }
 }

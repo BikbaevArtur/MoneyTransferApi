@@ -51,7 +51,9 @@ public class PhoneDataServiceImpl implements PhoneDataService {
     @Cacheable(value = "phone_numbers", key = "'findAllPhoneNumberByIdUser' + '_' +#idUser")
     @Override
     public List<PhoneNumber> findAllPhoneNumberByIdUser(Long idUser) {
-        return mapper.allToPhoneNumber(repository.findByUserId(idUser));
+        List<PhoneData> phones = repository.findByUserId(idUser);
+        phoneDataValidator.validatePhoneNumberIsNotEmpty(phones);
+        return mapper.allToPhoneNumber(phones);
     }
 
 

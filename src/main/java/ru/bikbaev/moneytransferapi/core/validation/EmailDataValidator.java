@@ -1,6 +1,9 @@
 package ru.bikbaev.moneytransferapi.core.validation;
 
+import ru.bikbaev.moneytransferapi.core.entity.EmailData;
 import ru.bikbaev.moneytransferapi.dto.Email;
+
+import java.util.List;
 
 public interface EmailDataValidator {
 
@@ -28,5 +31,13 @@ public interface EmailDataValidator {
      * @param newEmail новый email
      */
     void validateEmailChange(String oldEmail,String newEmail);
+
+
+    /**
+     * проверяет, список пустой или нет
+     * выбрасывает исключение если список пустой
+     * @param emailDataList список email пользователя
+     */
+    void validateEmailIsNotEmpty(List<EmailData> emailDataList);
 
 }

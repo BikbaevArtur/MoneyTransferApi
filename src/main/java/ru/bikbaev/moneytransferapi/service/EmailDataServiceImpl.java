@@ -51,7 +51,9 @@ public class EmailDataServiceImpl implements EmailDataService {
     @Cacheable(value = "emails", key = "'findAllEmailByIdUser' + '_' + #idUser")
     @Override
     public List<Email> findAllEmailByIdUser(Long idUser) {
-        return mapper.allToEmail(repository.findByUserId(idUser));
+        List<EmailData> emails = repository.findByUserId(idUser);
+        emailDataValidator.validateEmailIsNotEmpty(emails);
+        return mapper.allToEmail(emails);
     }
 
 
